@@ -14,6 +14,7 @@ jobs:
       - name: Set up Go 1.x
         uses: actions/setup-go@v4
         with:
+          cache: false
           go-version: ^1.16
       - name: Run Test
         run: make test # <1>
@@ -42,6 +43,7 @@ jobs:
       - name: Set up Go 1.x #
         uses: actions/setup-go@v4
         with:
+          cache: false
           go-version: ^1.16
 
       - name: Build
