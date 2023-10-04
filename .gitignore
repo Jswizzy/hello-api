@@ -22,3 +22,6 @@ api
 
 # Go workspace file
 go.work
+
+coverage.out
+cover.html
