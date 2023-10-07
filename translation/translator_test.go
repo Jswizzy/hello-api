@@ -66,7 +66,7 @@ func TestTranslate(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			res := translation.Translate(tc.word, tc.language)
 			if res != tc.want {
-				t.Errorf(`expected "%s" but recieved "%s"`, tc.want, res)
+				t.Errorf(`expected "%s" but received "%s"`, tc.want, res)
 			}
 		})
 	}

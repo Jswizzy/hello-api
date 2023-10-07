@@ -1,3 +1,4 @@
+// Package rest houses all rest handlers
 package rest
 
 import (
@@ -21,14 +22,14 @@ func TranslateHandler(w http.ResponseWriter, r *http.Request) {
 		language = "english"
 	}
 	word := strings.ReplaceAll(r.URL.Path, "/", "")
-	translatedWord := translation.Translate(word, language)
-	if translatedWord == "" {
+	translation := translation.Translate(word, language)
+	if translation == "" {
 		w.WriteHeader(404)
 		return
 	}
 	resp := Resp{
 		Language:    language,
-		Translation: translatedWord,
+		Translation: translation,
 	}
 	if err := enc.Encode(resp); err != nil {
 		panic("unable to encode response")
