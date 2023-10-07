@@ -1,10 +1,10 @@
-GO_VERSION := 1.18  # <1>
+GO_VERSION := 1.21
 
-.PHONY: install-go init-go
+.PHONY: install-go init-go install-lint
 
-setup: install-go init-go # <2>
+setup: install-go init-go install-lint
 
-install-go: # <3>
+install-go:
 	wget "https://golang.org/dl/go$(GO_VERSION).linux-amd64.tar.gz"
 	sudo tar -C /usr/local -xzf go$(GO_VERSION).linux-amd64.tar.gz
 	rm go$(GO_VERSION).linux-amd64.tar.gz
@@ -34,3 +34,7 @@ report:
 
 check-format:
 	test -z $$(go fmt ./...)
+
+install-lint:
+	sudo curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $$(go env GOPATH)/bin v1.41.1
+
