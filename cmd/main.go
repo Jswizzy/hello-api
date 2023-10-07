@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 func main() {
@@ -20,7 +21,14 @@ func main() {
 	mux.HandleFunc("/translate/hello", rest.TranslateHandler)
 	mux.HandleFunc("/health", handlers.HealthCheck)
 
+	server := &http.Server{
+		Addr:         addr,
+		ReadTimeout:  5 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		Handler:      mux,
+	}
+
 	log.Printf("listening on %s\n", addr)
 
-	log.Fatal(http.ListenAndServe(addr, mux))
+	log.Fatal(server.ListenAndServe())
 }

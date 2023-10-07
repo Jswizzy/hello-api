@@ -21,15 +21,14 @@ func TranslateHandler(w http.ResponseWriter, r *http.Request) {
 		language = "english"
 	}
 	word := strings.ReplaceAll(r.URL.Path, "/", "")
-	translation := translation.Translate(word, language)
-	if translation == "" {
-		language = ""
+	translatedWord := translation.Translate(word, language)
+	if translatedWord == "" {
 		w.WriteHeader(404)
 		return
 	}
 	resp := Resp{
 		Language:    language,
-		Translation: translation,
+		Translation: translatedWord,
 	}
 	if err := enc.Encode(resp); err != nil {
 		panic("unable to encode response")
