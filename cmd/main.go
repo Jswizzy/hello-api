@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/jswizzy/hello-api/handlers"
 	"github.com/jswizzy/hello-api/handlers/rest"
+	"github.com/jswizzy/hello-api/translation"
 	"log"
 	"net/http"
 	"time"
@@ -12,8 +13,9 @@ func main() {
 	addr := ":8080"
 
 	mux := http.NewServeMux()
-
-	mux.HandleFunc("/translate/hello", rest.TranslateHandler)
+	service := translation.NewStaticService()
+	translateHandler := rest.NewTranslateHandler(service)
+	mux.HandleFunc("/translate/hello", translateHandler.TranslateHandler)
 	mux.HandleFunc("/health", handlers.HealthCheck)
 
 	server := &http.Server{

@@ -6,69 +6,73 @@ import (
 )
 
 func TestTranslate(t *testing.T) {
-	tt := map[string]struct {
-		word     string
-		language string
-		want     string
+	// Arrange
+	tt := []struct {
+		Word        string
+		Language    string
+		Translation string
 	}{
-		"English": {
-			word:     "hello",
-			language: "english",
-			want:     "hello",
+		{ //<2>
+			Word:        "hello",
+			Language:    "english",
+			Translation: "hello",
 		},
-		"German": {
-			word:     "hello",
-			language: "german",
-			want:     "hallo",
+		{
+			Word:        "hello",
+			Language:    "german",
+			Translation: "hallo",
 		},
-		"Finnish": {
-			word:     "hello",
-			language: "finnish",
-			want:     "hei",
+		{
+			Word:        "hello",
+			Language:    "finnish",
+			Translation: "hei",
 		},
-		"Dutch": {
-			word:     "hello",
-			language: "dutch",
-			want:     "",
+		{ // <1>
+			Word:        "bye",
+			Language:    "dutch",
+			Translation: "",
 		},
-		"French": {
-			word:     "hello",
-			language: "french",
-			want:     "bonjour",
+		{
+			Word:        "hello",
+			Language:    "dutch",
+			Translation: "",
 		},
-		"Missing": {
-			word:     "bye",
-			language: "dutch",
-			want:     "",
+		{ // <1>
+			Word:        "bye",
+			Language:    "german",
+			Translation: "",
 		},
-		"Wrong": {
-			word:     "bye",
-			language: "german",
-			want:     "",
+		{
+			Word:        "hello",
+			Language:    "German",
+			Translation: "hallo",
 		},
-		"Capital Word": {
-			word:     "Hello",
-			language: "german",
-			want:     "hallo",
+		{
+			Word:        "Hello",
+			Language:    "german",
+			Translation: "hallo",
 		},
-		"Capital Language": {
-			word:     "hello",
-			language: "German",
-			want:     "hallo",
+		{
+			Word:        "hello ",
+			Language:    "german",
+			Translation: "hallo",
 		},
-		"Space": {
-			word:     "hello ",
-			language: "german",
-			want:     "hallo",
+		{
+			Word:        "hello",
+			Language:    "french",
+			Translation: "bonjour",
 		},
 	}
-	for name, tc := range tt {
-		t.Run(name, func(t *testing.T) {
-			res := translation.Translate(tc.word, tc.language)
-			if res != tc.want {
-				t.Errorf(`expected "%s" but received "%s"`, tc.want, res)
-			}
-		})
-	}
+	underTest := translation.NewStaticService()
+	for _, test := range tt {
+		// Act
+		res := underTest.Translate(test.Word, test.Language)
 
+		// Assert
+		if res != test.Translation {
+			t.Errorf(
+				`expected "%s" to be "%s" from "%s" but received "%s"`,
+				test.Word, test.Language, test.Translation, res)
+		}
+	}
 }
