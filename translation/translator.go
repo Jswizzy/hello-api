@@ -1,15 +1,18 @@
+// Package translation houses logic to take a given word and find it in a different language
 package translation
 
-import "strings"
+import (
+	"strings"
+)
 
+// Translate will take a given word and language and find a translation for it.
 func Translate(word string, language string) string {
-	word = sanitizeInput(word)
-	language = sanitizeInput(language)
+	word = sanitizeInput(word)         // <1>
+	language = sanitizeInput(language) // <2>
 
 	if word != "hello" {
 		return ""
 	}
-
 	switch language {
 	case "english":
 		return "hello"
@@ -17,12 +20,11 @@ func Translate(word string, language string) string {
 		return "hei"
 	case "german":
 		return "hallo"
-	case "french":
+	case "french": // <1>
 		return "bonjour"
 	default:
 		return ""
 	}
-
 }
 
 func sanitizeInput(w string) string { // <3>

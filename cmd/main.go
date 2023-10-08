@@ -1,20 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"github.com/jswizzy/hello-api/handlers"
 	"github.com/jswizzy/hello-api/handlers/rest"
 	"log"
 	"net/http"
-	"os"
 	"time"
 )
 
 func main() {
-	addr := fmt.Sprintf(":%s", os.Getenv("PORT"))
-	if addr == ":" {
-		addr = ":8080"
-	}
+	addr := ":8080"
 
 	mux := http.NewServeMux()
 
